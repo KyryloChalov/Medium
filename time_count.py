@@ -2,7 +2,7 @@ def my_function():
     for i in range(1000):
         i += i
 
-
+# 1 =======================================
 
 import time
 
@@ -14,6 +14,7 @@ execution_time = end_time - start_time
 print(f"1. time.time()    - час виконання: {execution_time} секунд")
 
 
+# 2 =======================================
 
 import timeit
 
@@ -21,6 +22,7 @@ execution_time = timeit.timeit(my_function, number=1000)
 print(f"2. timeit.timeit  - час виконання: {execution_time} секунд")
 
 
+# 3 =======================================
 
 from datetime import datetime
 
@@ -32,6 +34,7 @@ execution_time = (end_time - start_time).total_seconds()
 print(f"3. datetime.now() - час виконання: {execution_time} секунд")
 
 
+# 4 =======================================
 
 import cProfile
 
