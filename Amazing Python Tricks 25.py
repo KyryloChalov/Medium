@@ -166,33 +166,33 @@
 
 
 
-# 11. Missing Keys ?? defaultdict got you!!
-## Kinda Bad
-# from collections import defaultdict
-text = "the quick brown fox jumps over the lazy dog"
-
-word_count = {}
-for word in text.split():
-    if word not in word_count:
-        word_count[word] = 0
-    word_count[word] += 1
-
-print(f"0. {word_count = }")
-
-
-## Much Better
-from collections import defaultdict
+# # 11. Missing Keys ?? defaultdict got you!!
+# ## Kinda Bad
+# # from collections import defaultdict
+# text = "the quick brown fox jumps over the lazy dog"
 
 # word_count = {}
-word_count = defaultdict(int)
-print(f"1. {word_count = }")
-for word in text.split():
-      word_count[word] += 1
+# for word in text.split():
+#     if word not in word_count:
+#         word_count[word] = 0
+#     word_count[word] += 1
 
-print(f"2. {word_count = }")
+# print(f"0. {word_count = }")
 
-word_count = dict(word_count)
-print(f"3. {word_count = }")
+
+# ## Much Better
+# from collections import defaultdict
+
+# # word_count = {}
+# word_count = defaultdict(int)
+# print(f"1. {word_count = }")
+# for word in text.split():
+#       word_count[word] += 1
+
+# print(f"2. {word_count = }")
+
+# word_count = dict(word_count)
+# print(f"3. {word_count = }")
 
 
 
@@ -243,3 +243,161 @@ print(f"3. {word_count = }")
 # print(f"2. {z = }")
 
 
+
+# # 16. Quick and Easy Key Checking in Dictionaries
+# # If you only want to check if a key exists in a dictionary, you don’t need to call .keys()first, just use inon the dictionary itself.
+
+# ## Bad
+# d = {"key": "value"} if "key" in d.keys():
+
+# ## Good
+# d = {"key": "value"} if "key" in d:
+
+
+
+# # 17. Avoiding the Pitfall of Useless Return Values
+# # Not using meaningful return values from functions can hinder code understandability. It is important to design functions with return values that provide useful information and can be leveraged in other parts of the code when called.
+
+# ## kinda Bad
+# def calculate_sum_of_n_numbers(numbers):
+#     total = sum(numbers)
+#     print("Sum:", total)
+
+# numbers_list = [11, 45, 32, 49, 56]
+# calculate_sum_of_n_numbers(numbers_list)
+# # In the above example, calculate_sum_of_n_numbers() the function computes the sum of a list but only prints the data without returning it. Instead of using print, it's better to return the value for a better code flow.
+
+# ## Good
+# def calculate_sum_of_n_numbers(numbers):
+#     total = sum(numbers)
+#     return total
+
+# numbers_list = [1, 2, 3, 4, 5]
+# result = calculate_sum_of_n_numbers(numbers_list)
+# print("Sum:", result)
+
+
+
+# # 18. Streamline Equality Checks with a Comparison Chain
+# # When checking that multiple objects are equal to each other, don’t use an and expression. Use a comparison chain instead, for example.
+
+# ## Bad
+# if x == y and x == z: 
+#  pass
+
+
+# ## A Good one
+# if x == y == z: 
+#  pass
+
+
+
+# # 19. A Code optimization Tip: Make use operator Instead of Lambdas
+# # Don’t write lambdas/functions to wrap builtin operators, use the operatormodule instead.
+
+# from functools import reduce 
+# nums = [1, 2, 3, 4, 5, 44, 66] 
+
+# ## Bad Example
+# print(reduce(lambda x, y: x + y, nums)) # 6
+
+# ## A Better One
+# from operator import add 
+# print(reduce(add, nums)) # 6
+
+
+# # 20. A better way to manipulate tabs in strings
+# # Instead of using replace("\\t", " " * 8), you can use the expandtabs() method. It is more succinct and descriptive. It also allows for an optional parameter to specify the tab width.
+
+# ## Bad
+# spaces_8 = "hello\\tworld".replace("\\t", " " * 8) 
+# spaces_4 = "hello\\tworld".replace("\\t", " ")
+
+
+# ## Good
+# spaces_8 = "hello\\tworld".expandtabs() 
+# spaces_4 = "hello\\tworld".expandtabs(4)
+
+
+
+# # 22. You Don’t Always Need open to Write to Files
+# # When you simply need to save some content to a file, using a with block might be more than necessary. Instead, you can streamline your code by using pathlib's write_text() function.
+
+# ## Bad
+# content = "Hello, world!"
+# with open("example.txt", "w") as file:
+#     file.write(content)
+
+# ## Good
+# from pathlib import Path
+# # content = "Hello, world!"
+# Path("example_.txt").write_text(content)
+
+
+# # 23. Never leave your except block empty
+# ## Bad
+# try:
+#     file = open("data.txt", "r")
+#     # Perform some operations with the file
+# except:
+#     # Error handling
+#     pass
+
+
+# ## Good
+# try:
+#     file = open("data.txt", "r")
+#     # Perform some operations with the file
+#     # ...
+#     file.close()
+# except FileNotFoundError:
+#     print("File not found!")
+# except IOError as e:
+#     print("Error occurred while handling the file:", str(e))
+
+
+
+# # 24. A Better Way to Access Dictionary Values: Try get()
+# # When accessing values in a dictionary, using the get() method can be safer and more concise than using standard indexing. The get() method allows you to provide a default value if the key is not found, avoiding potential KeyError exceptions.
+
+# ## Not so Good
+# data = {"name": "Alice", "age": 30}
+
+# # Standard indexing, may raise KeyError if the key doesn't exist
+# name = data["name"]  
+# city = data["city"] if "city" in data else "Unknown"
+
+
+
+# ## Good
+# data = {"name": "Alice", "age": 30}
+
+# # Using get() method to safely access dictionary values with a default
+# name = data.get("name", "Unknown")
+# city = data.get("city", "Unknown")
+
+
+# # 25. Make use of Match and Case for better conditional statements
+# ## Bad
+# def describe_type(obj):
+#     if isinstance(obj, str):
+#         return "It's a string"
+#     elif isinstance(obj, int):
+#         return "It's an integer"
+#     elif isinstance(obj, list):
+#         return "It's a list"
+#     else:
+#         return "It's something else"
+
+
+# ## A Kinda Good Way 
+# def describe_type(obj):
+#     match obj:
+#         case str():
+#             return "It's a string"
+#         case int():
+#             return "It's an integer"
+#         case list():
+#             return "It's a list"
+#         case _:
+#             return "It's something else"
