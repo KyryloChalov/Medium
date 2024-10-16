@@ -1,0 +1,4 @@
+Product: Laptop
+Sales: 150
+Product: Mouse
+Sales: 300
