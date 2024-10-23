@@ -2,6 +2,7 @@ def my_function():
     for i in range(1000):
         i += i
 
+
 # 1 =======================================
 
 import time
@@ -39,4 +40,4 @@ print(f"3. datetime.now() - час виконання: {execution_time} секу
 import cProfile
 
 print("4. cProfile")
-cProfile.run('my_function()')
+cProfile.run("my_function()")
